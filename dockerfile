@@ -7,7 +7,8 @@ WORKDIR /app
 COPY ./app .
 
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 RUN pip install gunicorn
 
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+EXPOSE 5000
+CMD ["gunicorn", "-w", "4", "-b", "127.0.0.1:5000", "app:app"]
