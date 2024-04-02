@@ -3,18 +3,11 @@ services:
   app:
     build:
       context: .
-<<<<<<< HEAD
-      dockerfile: Dockerfile
-=======
       dockerfile: dockerfile
->>>>>>> 88abb58 (merge commit)
     ports:
       - "5000:5000"
     volumes:
       - ./app:/app
     environment:
       - PYTHONIOENCODING=utf-8
-<<<<<<< HEAD
-=======
     command: gunicorn -w 4 -b 0.0.0.0:5000 app:app
->>>>>>> 88abb58 (merge commit)

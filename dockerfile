@@ -18,8 +18,4 @@ RUN pip install gunicorn
 RUN pip install update
 
 EXPOSE 5000
-<<<<<<< HEAD
 CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
-=======
-CMD ["gunicorn", "-w", "4", "-b", "127.0.0.1:5000", "app:app"]
->>>>>>> 88abb58 (merge commit)
