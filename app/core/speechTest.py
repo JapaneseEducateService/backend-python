@@ -1,3 +1,5 @@
+# azure sdk를 활용한 발음평가 테스트
+# division by zero error 발생? 추후 다시 테스트 필요
 import azure.cognitiveservices.speech as speechsdk
 import time
 import string
