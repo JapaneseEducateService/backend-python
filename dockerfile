@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
 RUN cp /etc/mecabrc /usr/local/etc/
 
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 RUN pip install gunicorn
 RUN pip install update
 

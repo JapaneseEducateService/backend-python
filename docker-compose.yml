@@ -3,10 +3,11 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - "5000:5000"
     volumes:
       - ./app:/app
     environment:
       - PYTHONIOENCODING=utf-8
+    command: gunicorn -w 4 -b 0.0.0.0:5000 app:app
