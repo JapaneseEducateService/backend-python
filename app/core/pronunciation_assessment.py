@@ -10,12 +10,8 @@ def get_pronunciation_assessment(audioFile, referenceText):
     env_path = '/app/.env'
     load_dotenv(dotenv_path=env_path)
 
-    # 환경 변수 사용
-    azure_api_key = os.getenv('AZURE_API_KEY')
-    azure_region = os.getenv('AZURE_REGION')
-
-    subscriptionKey = azure_api_key # replace this with your subscription key
-    region = azure_region # replace this with the region corresponding to your subscription key, e.g. westus, eastasia
+    subscriptionKey = os.getenv('AZURE_API_KEY')
+    region = os.getenv('AZURE_REGION')
 
     # a common wave header, with zero audio length
     # since stream data doesn't contain header, but the API requires header to fetch format information, so you need post this header as first chunk for each query
@@ -36,7 +32,7 @@ def get_pronunciation_assessment(audioFile, referenceText):
 
     # build pronunciation assessment parameters
     # referenceText_test = "今日は水木です。読みたいテキストをここに入力してください。"
-    pronAssessmentParamsJson = "{\"ReferenceText\":\"%s\",\"GradingSystem\":\"HundredMark\",\"Dimension\":\"Comprehensive\"}" % referenceText
+    pronAssessmentParamsJson = "{\"ReferenceText\":\"%s\",\"Granularity\":\"Word\" ,\"GradingSystem\":\"HundredMark\",\"Dimension\":\"Comprehensive\"}" % referenceText
     pronAssessmentParamsBase64 = base64.b64encode(bytes(pronAssessmentParamsJson, 'utf-8'))
     pronAssessmentParams = str(pronAssessmentParamsBase64, "utf-8")
 

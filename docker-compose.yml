@@ -10,4 +10,6 @@ services:
       - ./app:/app
     environment:
       - PYTHONIOENCODING=utf-8
-    command: gunicorn -w 4 -b 0.0.0.0:5000 app:app
+    command: gunicorn --reload -w 4 -b 0.0.0.0:5000 app:app
+# -- reload 옵션은 docker를 껐다 키지 않아도 적용되게 해준다.
+# 실제 환경에서는 사용하지 않는게 좋다.

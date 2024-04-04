@@ -4,11 +4,9 @@ import azure.cognitiveservices.speech as speechsdk
 import time
 import string
 from flask import jsonify
-def pronunciation_assessment_continuous_from_file():
-    try:
-        """Performs continuous pronunciation assessment asynchronously with input from an audio file.
-            See more information at https://aka.ms/csspeech/pa"""
 
+def pronunciation_assessment_continuous_from_file(audio_file, reference_text):
+    try:
         import difflib
         import json
 
@@ -17,20 +15,17 @@ def pronunciation_assessment_continuous_from_file():
         speech_config = speechsdk.SpeechConfig(subscription="4980665b2da145a6aaec98710437b995", region="koreacentral")
         # return {'test' : speech_config.region}
         # provide a WAV file as an example. Replace it with your own.
-        audio_file = "/app/japanese1.wav"
         audio_config = speechsdk.audio.AudioConfig(filename=audio_file)
 
         speech_recognizer = speechsdk.SpeechRecognizer(speech_config, audio_config)
 
-        reference_text = "今日は水木です。読みたいテキストをここに入力してください。"
-        # reference_text = "こんにちはみずきです。よみたいテキストをここににゅうりょくしてください。"
         # create pronunciation assessment config, set grading system, granularity and if enable miscue based on your requirement.
         enable_miscue = True
         enable_prosody_assessment = False
         pronunciation_config = speechsdk.PronunciationAssessmentConfig(
             reference_text=reference_text,
             grading_system=speechsdk.PronunciationAssessmentGradingSystem.HundredMark,
-            granularity=speechsdk.PronunciationAssessmentGranularity.Phoneme,
+            granularity=speechsdk.PronunciationAssessmentGranularity.Word,
             enable_miscue=enable_miscue)
         if enable_prosody_assessment:
             pronunciation_config.enable_prosody_assessment()

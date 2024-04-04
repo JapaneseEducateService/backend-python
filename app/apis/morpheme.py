@@ -1,7 +1,6 @@
 from flask import request,jsonify
 from flask_restx import Resource, Api, Namespace
 import MeCab
-import json
 import jaconv
 
 Morpheme = Namespace('Morpheme', description='Mecab related operations')
