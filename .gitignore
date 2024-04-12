@@ -21,3 +21,4 @@ instance/
 .env
 .env.*
 
+credentials.json
