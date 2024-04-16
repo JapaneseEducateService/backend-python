@@ -1,10 +1,9 @@
-from flask import request, jsonify
+from flask import request, jsonify, send_file
 from flask_restx import Resource, Namespace
 import core.pronunciation_assessment as pronunciation_assessment
 import core.pitch_comparison as pitch_comparison
 import core.google_text_to_speech as google_text_to_speech
 Speech = Namespace('Speech', description='Speech related operations')
-
 @Speech.route('')
 class SpeechResource(Resource):
   def post(self):
@@ -21,7 +20,6 @@ class SpeechResource(Resource):
     # Validate reference text
     if not referenceText:
       return jsonify({'message': 'No reference text provided'})
-    
     
     pronunciationAssessmentResult = pronunciation_assessment.get_pronunciation_assessment(audioFile, referenceText)
     audioFile.seek(0)
@@ -56,13 +54,13 @@ class SpeechResource(Resource):
 
 @Speech.route('/tts')
 class GoogleTTS(Resource):
-  def get(self):
-    referenceText = request.form['referenceText']
+  def post(self):
+    referenceText = request.json['referenceText']
     if not referenceText:
       return jsonify({'message': 'No reference text provided'})
     
-    response = google_text_to_speech.get_TTS(referenceText)
-    return jsonify(response)
+    audio = google_text_to_speech.get_TTS(referenceText)
+    return send_file(audio, mimetype='audio/wav')
   
 def allowed_file(filename):
   ALLOWED_EXTENSIONS = {'wav'}  # Add more allowed extensions if needed
