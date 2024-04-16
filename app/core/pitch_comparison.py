@@ -3,7 +3,6 @@ import numpy as np
 from scipy.spatial.distance import euclidean
 from fastdtw import fastdtw
 from dtw import *
-import traceback
 import core.google_text_to_speech as google_text_to_speech
 
 def get_pitch_comparison(audioFile, referenceText):
