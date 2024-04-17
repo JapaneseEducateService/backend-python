@@ -21,8 +21,10 @@ class SpeechResource(Resource):
     if not referenceText:
       return jsonify({'message': 'No reference text provided'})
     
+    # azure api 점수 결과 받기
     pronunciationAssessmentResult = pronunciation_assessment.get_pronunciation_assessment(audioFile, referenceText)
     audioFile.seek(0)
+    # pitch 비교 결과 받기
     pitchComparisonResult = pitch_comparison.get_pitch_comparison(audioFile, referenceText)
     
     

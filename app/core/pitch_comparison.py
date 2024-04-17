@@ -65,8 +65,6 @@ def get_pitch_comparison(audioFile, referenceText):
     # 변화 구간의 유사성 비교
     similarity_score = compare_changes(changes1, changes2)
 
-    print(f"유사성 점수: {similarity_score}%")
-
     return similarity_score
   except Exception as e:
     return {'error': str(e)}
