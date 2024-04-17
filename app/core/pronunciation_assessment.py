@@ -12,28 +12,23 @@ def get_pronunciation_assessment(audioFile, referenceText):
     subscriptionKey = os.getenv('AZURE_API_KEY')
     region = os.getenv('AZURE_REGION')
 
-    # a common wave header, with zero audio length
-    # since stream data doesn't contain header, but the API requires header to fetch format information, so you need post this header as first chunk for each query
-    WaveHeader16K16BitMono = bytes([ 82, 73, 70, 70, 78, 128, 0, 0, 87, 65, 86, 69, 102, 109, 116, 32, 18, 0, 0, 0, 1, 0, 1, 0, 128, 62, 0, 0, 0, 125, 0, 0, 2, 0, 16, 0, 0, 0, 100, 97, 116, 97, 0, 0, 0, 0 ])
-
     # build pronunciation assessment parameters
     pronAssessmentParamsJson = "{\"ReferenceText\":\"%s\",\"Granularity\":\"Word\" ,\"GradingSystem\":\"HundredMark\",\"Dimension\":\"Comprehensive\"}" % referenceText
     pronAssessmentParamsBase64 = base64.b64encode(bytes(pronAssessmentParamsJson, 'utf-8'))
     pronAssessmentParams = str(pronAssessmentParamsBase64, "utf-8")
 
     # build request
-    url = "https://%s.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=ja-jp" % region
+    url = f"https://%s.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=ja-jp" % region
     headers = { 'Accept': 'application/json;text/xml',
                 'Connection': 'Keep-Alive',
                 'Content-Type': 'audio/wav; codecs=audio/pcm; samplerate=16000',
                 'Ocp-Apim-Subscription-Key': subscriptionKey,
                 'Pronunciation-Assessment': pronAssessmentParams,
-                'Transfer-Encoding': 'chunked',
                 'Expect': '100-continue' }
 
 
-    # send request with chunked data
-    response = requests.post(url=url, data=audioFile, headers=headers)
+    audioData = audioFile.read()
+    response = requests.post(url=url, data=audioData, headers=headers)
 
     resultJson = json.loads(response.text)
 
