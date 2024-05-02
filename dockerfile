@@ -6,6 +6,9 @@ WORKDIR /app
 
 COPY ./app .
 
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
 RUN apt-get update && apt-get install -y \
   mecab \
   mecab-ipadic-utf8 \
