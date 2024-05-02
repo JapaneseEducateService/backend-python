@@ -13,7 +13,7 @@ def get_pronunciation_assessment(audioFile, referenceText):
     region = os.getenv('AZURE_REGION')
 
     # build pronunciation assessment parameters
-    pronAssessmentParamsJson = "{\"ReferenceText\":\"%s\",\"Granularity\":\"Word\" ,\"GradingSystem\":\"HundredMark\",\"Dimension\":\"Comprehensive\"}" % referenceText
+    pronAssessmentParamsJson = "{\"ReferenceText\":\"%s\",\"Granularity\":\"Phoneme\" ,\"GradingSystem\":\"HundredMark\",\"Dimension\":\"Comprehensive\"}" % referenceText
     pronAssessmentParamsBase64 = base64.b64encode(bytes(pronAssessmentParamsJson, 'utf-8'))
     pronAssessmentParams = str(pronAssessmentParamsBase64, "utf-8")
 
@@ -39,6 +39,7 @@ def get_pronunciation_assessment(audioFile, referenceText):
     words = resultJson.get('NBest')[0].get('Words', 'Not Available')
     displayText = resultJson.get('NBest')[0].get('Display', 'Not Available')
 
+    return resultJson
     return {
              "AccuracyScore": accuracyScore,
              "FluencyScore": fluencyScore,
