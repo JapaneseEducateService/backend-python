@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # CREDENTIALS 환경변수에 설정 된 값을 파일로 출력
 echo $CREDENTIALS > /app/credentials.json
 
