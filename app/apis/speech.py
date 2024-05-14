@@ -3,7 +3,11 @@ from flask_restx import Resource, Namespace
 import core.pronunciation_assessment as pronunciation_assessment
 import core.pitch_comparison as pitch_comparison
 import core.google_text_to_speech as google_text_to_speech
-Speech = Namespace('Speech', description='Speech related operations')
+Speech = Namespace('Speech', description='발음 평가 서비스 API')
+
+
+
+
 @Speech.route('')
 class SpeechResource(Resource):
   def post(self):

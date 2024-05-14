@@ -3,9 +3,9 @@ from .morpheme import Morpheme
 from .speech import Speech
 
 api = Api(
-  title='My Python API',
+  title='Tamago Flask API',
   version='1.0',
-  description='A simple demonstration of a Flask RestPlus powered API',
+  description='Tamago Flask API with Swagger UI',
 )
 
 api.add_namespace(Speech, '/speech')
