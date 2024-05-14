@@ -39,7 +39,6 @@ def get_pronunciation_assessment(audioFile, referenceText):
     words = resultJson.get('NBest')[0].get('Words', 'Not Available')
     displayText = resultJson.get('NBest')[0].get('Display', 'Not Available')
 
-    return resultJson
     return {
              "AccuracyScore": accuracyScore,
              "FluencyScore": fluencyScore,
