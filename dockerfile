@@ -6,7 +6,6 @@ WORKDIR /app
 
 COPY ./app .
 
-
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
