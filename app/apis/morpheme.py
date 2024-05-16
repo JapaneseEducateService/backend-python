@@ -5,19 +5,10 @@ import jaconv
 from flask_restx import fields
 Morpheme = Namespace('Morpheme', description='형태소 분석 서비스 API')
 
-MorphemePostResponseModel = Morpheme.model('Model', {	  
-  'source' : fields.List(description="형태소 분석한 텍스트", required=True, example="学校、先生、生徒、勉強、日本語、勉強"),
-  'gana': fields.List(description="히라가나", required=True, example="がっこう、せんせい、せいと、べんきょう、にほんご、べんきょう"),
-  'speak': fields.List(description="발음", required=True, example="ガッコウ、センセイ、セイト、ベンキョウ、ニホンゴ、ベンキョウ")
-})
 
 
 @Morpheme.route('')
 class MorphemeResource(Resource):
-	
-	@Morpheme.doc(responses={200: 'Success', 400: 'Bad Request', 500: 'Internal Server Error'})
-	@Morpheme.response(code=200, description='Success', model=MorphemePostResponseModel)
-	@Morpheme.param(name='texts', description='형태소 분석할 텍스트', _in='body', required=True, type='string', example="['学校、先生、生徒、勉強、日本語、勉強']")
 	def post(self):
 		# Mecab 객체 초기화
 		mecab = MeCab.Tagger('')
@@ -55,3 +46,6 @@ def convert_to_hiragana(text):
   hiragana = jaconv.kata2hira(text)
   return hiragana
 
+@Morpheme.errorhandler(Exception)
+def handle_exception(e):
+  return jsonify({"error": str(e)})
