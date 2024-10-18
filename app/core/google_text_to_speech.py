@@ -11,38 +11,39 @@ def get_TTS(referenceText):
       if os.path.exists(file_path):
         os.remove(file_path)
 
-    load_dotenv()
-    # Instantiates a client
+    # Google Cloud 서비스 계정 키 파일 경로 설정
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/secrets/google-credentials.json"
+
+    # 클라이언트 인스턴스화
     client = texttospeech.TextToSpeechClient()
     
-    # Set the text input to be synthesized
+    # 합성할 텍스트 입력 설정
     synthesis_input = texttospeech.SynthesisInput(text=referenceText)
 
-    # voice gender ("neutral")
+    # 음성 성별 ("중립")
     voice = texttospeech.VoiceSelectionParams(
       language_code="ja-JP", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
     )
 
-  # Select the type of audio file you want returned
+    # 반환할 오디오 파일 유형 선택
     audio_config = texttospeech.AudioConfig(
       audio_encoding=texttospeech.AudioEncoding.LINEAR16
     )
 
-    # Perform the text-to-speech request on the text input with the selected
-    # voice parameters and audio file type
+    # 선택한 음성 매개변수 및 오디오 파일 유형으로 텍스트 입력에 대해 텍스트-음성 변환 요청 수행
     response = client.synthesize_speech(
       input=synthesis_input, voice=voice, audio_config=audio_config
     )
     audio_file_path = "/app/audio/" + referenceText + ".wav"
-    # The response's audio_content is binary.
+    # 응답의 audio_content는 이진 데이터입니다.
     with open(audio_file_path, "wb") as out:
-      # Write the response to the output file.
+      # 응답을 출력 파일에 씁니다.
       out.write(response.audio_content)
     
-    # Start a timer to delete the file after a delay
+    # 지연 후 파일을 삭제하기 위한 타이머 시작
     delay = 30 * 60
     threading.Timer(delay, delete_file_after_delay, args=[audio_file_path, delay]).start()
 
     return audio_file_path
   except Exception as e:
-    return {'error': str(e)}  
+    return {'error': str(e)} 
