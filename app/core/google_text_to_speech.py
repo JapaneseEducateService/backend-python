@@ -5,6 +5,7 @@ def get_TTS(referenceText):
     import os
     import time
     import threading
+    import google.auth
 
     def delete_file_after_delay(file_path, delay):
       time.sleep(delay)
@@ -14,12 +15,14 @@ def get_TTS(referenceText):
 
     # 환경 변수 로드
     load_dotenv()
-    
+
     # Google Cloud 서비스 계정 키 파일 경로 설정
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/secrets/google-credentials.json"
 
+    credentials, project = google.auth.default()
+    
     # 클라이언트 인스턴스화
-    client = texttospeech.TextToSpeechClient()
+    client = texttospeech.TextToSpeechClient(credentials=credentials)
     
     # 합성할 텍스트 입력 설정
     synthesis_input = texttospeech.SynthesisInput(text=referenceText)
