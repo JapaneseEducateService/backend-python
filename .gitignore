@@ -22,3 +22,5 @@ instance/
 .env.*
 
 credentials.json
+
+app/secrets/google-credentials.json
