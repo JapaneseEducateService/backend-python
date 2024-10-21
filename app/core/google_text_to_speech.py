@@ -16,6 +16,11 @@ def get_TTS(referenceText):
     # # 환경 변수 로드 (로컬에서만 필요)
     # load_dotenv()
 
+<<<<<<< HEAD
+=======
+    # # Google Cloud 서비스 계정 키 파일 경로 설정
+    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/secrets/google-credentials.json"
+>>>>>>> 3f93e3c5dc5dabdd3cffeb30b00be1c2dae88cbe
 
     credentials, project = google.auth.default()
     
